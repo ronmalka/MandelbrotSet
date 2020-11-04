@@ -15,13 +15,11 @@ public:
 	
 	unsigned int TextureDesine(int width, int height);
 	~mandelbrotset(void);
-	inline void ResetCounter() { tmp = counter; counter = 0; }
-	inline void SetCounter() { counter = tmp; }
+	inline void decPower() { power = power > 2 ? --power : 2; }
+	inline void incPower() { ++power; }
 
 	void UpdatePosition( float xpos, float ypos);
 private:
-	unsigned int counter;
-	unsigned int tmp;
 	float x, y;
 	unsigned int power;
 };

@@ -17,7 +17,6 @@ static void printMat(const glm::mat4 mat)
 
 mandelbrotset::mandelbrotset() : Scene()
 {
-	counter = 1;
 	power = 2;
 }
 
@@ -43,8 +42,6 @@ void mandelbrotset::Init()
 
 void mandelbrotset::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int  shaderIndx)
 {	
-	if(counter)
-		counter++;
 	Shader *s = shaders[shaderIndx];
 	int r = ((pickedShape+1) & 0x000000FF) >>  0;
 	int g = ((pickedShape+1) & 0x0000FF00) >>  8;
@@ -69,7 +66,7 @@ void mandelbrotset::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int
 	//s->SetUniform1ui("counter", counter);
 	//s->SetUniform1f("x", x);
 	//s->SetUniform1f("y", y);
-	//s->SetUniform1ui("power", power);
+	s->SetUniform1ui("power", power);
 	s->Unbind();
 }
 

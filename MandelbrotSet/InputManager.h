@@ -15,11 +15,7 @@
 			glfwGetCursorPos(window, &x2, &y2);
 			if (rndr->Picking((int)x2, (int)y2))
 				rndr->UpdatePosition(x2, y2);
-			scn->ResetCounter();
 		}
-		else
-			scn->SetCounter();
-		//std::cout << "yes" << std::endl;
 		rndr->ClearDrawFlag(1,1);
 	}
 	
@@ -70,6 +66,7 @@
 			case GLFW_KEY_ESCAPE:
 				glfwSetWindowShouldClose(window, GLFW_TRUE);
 				break;
+
 			case GLFW_KEY_SPACE:
 				if (scn->IsActive())
 					scn->Deactivate();
@@ -78,12 +75,21 @@
 				break;
 
 			case GLFW_KEY_UP:
-				rndr->MoveCamera(0, scn->zTranslate, 0.4f);
+				scn->incPower();
+				//rndr->MoveCamera(0, scn->zTranslate, 0.4f);
 				break;
+
 			case GLFW_KEY_DOWN:
+				scn->decPower();
 				//scn->shapeTransformation(scn->xGlobalRotate,-5.f);
 				//cout<< "down: "<<endl;
-				rndr->MoveCamera(0, scn->zTranslate, -0.4f);
+				//rndr->MoveCamera(0, scn->zTranslate, -0.4f);
+				break;
+
+			case GLFW_KEY_RIGHT: //TODO
+				break;
+
+			case GLFW_KEY_LEFT: //TODO
 				break;
 
 			default:
