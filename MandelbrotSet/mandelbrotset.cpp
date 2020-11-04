@@ -31,7 +31,7 @@ void mandelbrotset::Init()
 	
 	AddShader("../res/shaders/pickingShader");	
 	AddShader("../res/shaders/myShader");
-	AddTexture("../res/textures/pal.png",1);
+	AddTexture("../res/textures/pal.png",2);
 	//TextureDesine(840, 840);
 
 	AddMaterial(texIDs,slots, 1);
@@ -60,9 +60,9 @@ void mandelbrotset::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int
 		s->SetUniformMat4f("MVP", glm::mat4(1));
 		s->SetUniformMat4f("Normal", glm::mat4(1));
 	}
-	//s->SetUniform1i("sampler1", materials[shapes[pickedShape]->GetMaterial()]->GetSlot(0));
-	//if(shaderIndx!=1)
-	//	s->SetUniform1i("sampler2", materials[shapes[pickedShape]->GetMaterial()]->GetSlot(1));
+	s->SetUniform1i("sampler1", materials[shapes[pickedShape]->GetMaterial()]->GetSlot(0));
+	if(shaderIndx!=1)
+		s->SetUniform1i("sampler2", materials[shapes[pickedShape]->GetMaterial()]->GetSlot(1));
 	//s->SetUniform1ui("counter", counter);
 	//s->SetUniform1f("x", x);
 	//s->SetUniform1f("y", y);
@@ -80,7 +80,7 @@ void mandelbrotset::UpdatePosition(float xpos,  float ypos)
 
 void mandelbrotset::WhenRotate()
 {
-	std::cout << "x "<<x<<", y "<<y<<std::endl;
+	//std::cout << "x "<<x<<", y "<<y<<std::endl;
 	
 }
 

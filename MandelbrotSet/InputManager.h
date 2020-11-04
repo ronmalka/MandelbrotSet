@@ -7,23 +7,23 @@
 
 	void mouse_callback(GLFWwindow* window,int button, int action, int mods)
 	{	
-		Renderer* rndr = (Renderer*)glfwGetWindowUserPointer(window);
-		mandelbrotset* scn = (mandelbrotset*)rndr->GetScene();
-		if (action == GLFW_PRESS)
-		{
-			double x2, y2;
-			glfwGetCursorPos(window, &x2, &y2);
-			if (rndr->Picking((int)x2, (int)y2))
-				rndr->UpdatePosition(x2, y2);
-		}
-		rndr->ClearDrawFlag(1,1);
+		//Renderer* rndr = (Renderer*)glfwGetWindowUserPointer(window);
+		//mandelbrotset* scn = (mandelbrotset*)rndr->GetScene();
+		//double x2, y2;
+		//glfwGetCursorPos(window, &x2, &y2);
+
+		//if (action == GLFW_PRESS)
+		//{
+		//	if (rndr->Picking((int)x2, (int)y2))
+		//		rndr->UpdatePosition(x2, y2);
+		//}
+		//rndr->ClearDrawFlag(1,1);
 	}
 	
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	{
 		Renderer* rndr = (Renderer*)glfwGetWindowUserPointer(window);
 		mandelbrotset* scn = (mandelbrotset*)rndr->GetScene();
-
 		scn->MyTranslate(glm::vec3(0,0,xoffset),0);
 		
 	}
@@ -87,6 +87,7 @@
 				break;
 
 			case GLFW_KEY_RIGHT: //TODO
+				rndr->MoveCamera(0, scn->zTranslate, -0.4f);
 				break;
 
 			case GLFW_KEY_LEFT: //TODO

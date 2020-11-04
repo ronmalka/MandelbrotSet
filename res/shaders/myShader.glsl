@@ -3,6 +3,7 @@
 
 in vec2 texCoord0;
 
+uniform sampler2D sampler;
 uniform uint power;
 
 int get_iterations()
@@ -21,17 +22,18 @@ int get_iterations()
         float prevReal = real;
         float prevImag = imag;
 
-        while(tmpPow<<1 < power){
+        while(tmpPow<<1 <= power){
             float tmpReal = real;
             real = (real * real - imag * imag);
-            imag = (2.0 * tmpReal * imag);
+            imag = 2.0 * tmpReal * imag;
             tmpPow = tmpPow<<1;
         }
 
-        if(tmpPow != power){
+        while(tmpPow != power){
             float tmpReal = real;
             real = (real * prevReal - imag * prevImag);
             imag = ( prevImag * tmpReal + prevReal * imag);
+            tmpPow++;
         }
 
         real += constReal;
@@ -39,7 +41,7 @@ int get_iterations()
 
         float dist = real * real + imag * imag;
          
-        if (dist > power*power)
+        if (dist > 2*2)
             break;
  
         ++iterations;
@@ -47,17 +49,6 @@ int get_iterations()
     return iterations;
 }
 
-vec4 return_color()
-{
-    int iter = get_iterations();
-    if (iter == MAX_ITERATIONS)
-    {
-        return vec4(0.0f, 0.0f, 0.0f, 1.0f);
-    }
- 
-    float iterations = float(iter) / MAX_ITERATIONS;    
-    return vec4(0.0f, iterations, 0.0f, 1.0f);
-}
  
 void main()
 {
@@ -67,7 +58,7 @@ void main()
         gl_FragColor =  vec4(0.0f, 0.0f, 0.0f, 1.0f);
     }
     else{
-         float iterations = float(iter) / MAX_ITERATIONS;    
-         gl_FragColor = vec4(0.0f, iterations, 0.0f, 1.0f);
+         float iterations = float(iter) / 256.0;    
+	     gl_FragColor = texture2D(sampler, vec2(iterations,1.0)); //you must have gl_FragColor
     }
 }
