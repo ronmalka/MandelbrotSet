@@ -17,10 +17,13 @@ public:
 	~mandelbrotset(void);
 	inline void decPower() { power = power > 2 ? --power : 2; }
 	inline void incPower() { ++power; }
+	inline void decColors() { colors = colors > 2 ? colors>>1 : 2; }
+	inline void incColors() { colors <<= 1; }
 
 	void UpdatePosition( float xpos, float ypos);
 private:
 	float x, y;
 	unsigned int power;
+	unsigned int colors;
 };
 

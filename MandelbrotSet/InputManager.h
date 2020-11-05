@@ -86,11 +86,12 @@
 				//rndr->MoveCamera(0, scn->zTranslate, -0.4f);
 				break;
 
-			case GLFW_KEY_RIGHT: //TODO
-				rndr->MoveCamera(0, scn->zTranslate, -0.4f);
+			case GLFW_KEY_RIGHT:
+				scn->incColors();
 				break;
 
-			case GLFW_KEY_LEFT: //TODO
+			case GLFW_KEY_LEFT: 
+				scn->decColors();
 				break;
 
 			default:

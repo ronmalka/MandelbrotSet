@@ -5,6 +5,7 @@ in vec2 texCoord0;
 
 uniform sampler2D sampler;
 uniform uint power;
+uniform uint colors;
 
 int get_iterations()
 {
@@ -28,14 +29,12 @@ int get_iterations()
             imag = 2.0 * tmpReal * imag;
             tmpPow = tmpPow<<1;
         }
-
         while(tmpPow != power){
             float tmpReal = real;
             real = (real * prevReal - imag * prevImag);
             imag = ( prevImag * tmpReal + prevReal * imag);
             tmpPow++;
         }
-
         real += constReal;
         imag += constImag;
 
@@ -58,7 +57,8 @@ void main()
         gl_FragColor =  vec4(0.0f, 0.0f, 0.0f, 1.0f);
     }
     else{
-         float iterations = float(iter) / 256.0;    
-	     gl_FragColor = texture2D(sampler, vec2(iterations,1.0)); //you must have gl_FragColor
+         float colorScale = float(iter) / MAX_ITERATIONS;
+         float requestedColor = floor(colorScale*colors)/colors;    
+	     gl_FragColor = texture2D(sampler, vec2(requestedColor,1.0)); //you must have gl_FragColor
     }
 }

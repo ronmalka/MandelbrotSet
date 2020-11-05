@@ -18,6 +18,7 @@ static void printMat(const glm::mat4 mat)
 mandelbrotset::mandelbrotset() : Scene()
 {
 	power = 2;
+	colors = 2;
 }
 
 //mandelbrotset::mandelbrotset(float angle ,float relationWH, float near, float far) : Scene(angle,relationWH,near,far)
@@ -67,6 +68,7 @@ void mandelbrotset::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int
 	//s->SetUniform1f("x", x);
 	//s->SetUniform1f("y", y);
 	s->SetUniform1ui("power", power);
+	s->SetUniform1ui("colors",colors);
 	s->Unbind();
 }
 
