@@ -2,8 +2,6 @@
 #include <iostream>
 #include "GL/glew.h"
 
-
-
 static void printMat(const glm::mat4 mat)
 {
 	std::cout<<" matrix:"<<std::endl;
@@ -18,7 +16,12 @@ static void printMat(const glm::mat4 mat)
 mandelbrotset::mandelbrotset() : Scene()
 {
 	power = 2;
-	colors = 2;
+	colors = 128;
+	zoom = 1.0;
+	offset_x = 0;
+	offset_y = 0;
+	old_x = 0;
+	old_y = 0;
 }
 
 //mandelbrotset::mandelbrotset(float angle ,float relationWH, float near, float far) : Scene(angle,relationWH,near,far)
@@ -61,15 +64,29 @@ void mandelbrotset::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int
 		s->SetUniformMat4f("MVP", glm::mat4(1));
 		s->SetUniformMat4f("Normal", glm::mat4(1));
 	}
-	s->SetUniform1i("sampler1", materials[shapes[pickedShape]->GetMaterial()]->GetSlot(0));
+	//s->SetUniform1i("sampler1", materials[shapes[pickedShape]->GetMaterial()]->GetSlot(0));
 	if(shaderIndx!=1)
 		s->SetUniform1i("sampler2", materials[shapes[pickedShape]->GetMaterial()]->GetSlot(1));
-	//s->SetUniform1ui("counter", counter);
-	//s->SetUniform1f("x", x);
-	//s->SetUniform1f("y", y);
 	s->SetUniform1ui("power", power);
 	s->SetUniform1ui("colors",colors);
+	s->SetUniform1f("zoom", zoom);
+	s->SetUniform1f("offset_x", offset_x);
+	s->SetUniform1f("offset_y", offset_y);
 	s->Unbind();
+}
+
+void mandelbrotset::setNewOffset(double xpos, double ypos) {
+	int viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	offset_x += (xpos - old_x)/viewport[2];
+	offset_y += (old_y - ypos)/viewport[3];
+}
+
+void mandelbrotset::updatePressedPos(double xpos, double ypos){
+	int viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	old_x = xpos;
+	old_y = ypos;
 }
 
 void mandelbrotset::UpdatePosition(float xpos,  float ypos)
@@ -82,14 +99,11 @@ void mandelbrotset::UpdatePosition(float xpos,  float ypos)
 
 void mandelbrotset::WhenRotate()
 {
-	//std::cout << "x "<<x<<", y "<<y<<std::endl;
-	
 }
 
 void mandelbrotset::WhenTranslate()
 {
 }
-
 
 
 void mandelbrotset::Motion()

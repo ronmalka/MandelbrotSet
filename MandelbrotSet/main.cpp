@@ -12,7 +12,7 @@ int main(int argc,char *argv[])
 	std::list<int> x, y;
 	//x.push_back(DISPLAY_WIDTH / 2);
 	//y.push_back(DISPLAY_HEIGHT / 2);
-	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "OpenGL");
+	Display display(DISPLAY_WIDTH, DISPLAY_HEIGHT, "Mandelbrot Set");
 	Renderer* rndr = new Renderer(CAMERA_ANGLE, (float)DISPLAY_WIDTH / 2 / DISPLAY_HEIGHT, NEAR, FAR); // adding a camera
 	mandelbrotset *scn = new mandelbrotset();  //initializing scene
 	
